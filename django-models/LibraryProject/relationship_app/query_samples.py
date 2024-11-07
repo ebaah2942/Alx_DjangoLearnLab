@@ -13,4 +13,3 @@ def list_books():
 def retrieve_librarian():
     librarian = Librarian.objects.get(name="Enoch Baah")
     return librarian
-    
