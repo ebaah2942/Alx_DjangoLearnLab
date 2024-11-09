@@ -1,15 +1,21 @@
 from relationship_app.models import *
 
-def query():
+def query(author_name):
     
-    author = Author.objects.get(name="J.K. Rowling")
+    author = Author.objects.get(name=author_name)
+    author_books = Book.objects.filter(author=author)
+    return author_books
 
 
-def list_books():
-    books = Book.objects.all()
+def list_books(libray_name):
+
+    library = Library.objects.get(name=libray_name)
+    books = library.book.all()
     return books
 
 
-def retrieve_librarian():
-    librarian = Librarian.objects.get(name="Enoch Baah")
+def retrieve_librarian(librarian_name):
+    library = Library.objects.get(name=librarian_name)
+
+    librarian = Librarian.objects.get(library=library)
     return librarian
