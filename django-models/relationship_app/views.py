@@ -7,12 +7,13 @@ from . models import Library
 
 def book_list(request):
     books = Book.objects.all()
-    return render(request, 'book_list.html', {'books': books})
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 
 class BookListView(DetailView):
     model = Book
     template_name = 'library_list.html'
+    context_object_name = 'library'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
