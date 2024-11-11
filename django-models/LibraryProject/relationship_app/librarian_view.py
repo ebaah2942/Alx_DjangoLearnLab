@@ -3,10 +3,10 @@ from django.shortcuts import render
 from .models import UserProfile
 
 def is_librarian(user):
-    return UserProfile.objects.filter(user=user, role='Librarian').exists()
+    return user.userprofile.role == 'Librarian'
 
 
 
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html', role='Librarian')
+    return render(request, 'relationship_app/librarian_view.html')
