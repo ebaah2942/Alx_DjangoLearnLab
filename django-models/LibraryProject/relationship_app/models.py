@@ -16,6 +16,16 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.author}"
+    
+    class Meta:
+        permissions = [
+            ("Can_add_book", "Can add a book"),
+            ("can_change_book", "Can change a book")
+            ("can_delete_book", "Can delete a book")
+        ]
+    
+
+
 
 class Library(models.Model):
     name = models.CharField(max_length=100)
@@ -53,5 +63,10 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
     instance.userprofile.save()
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()    
 
    
