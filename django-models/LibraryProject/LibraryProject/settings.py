@@ -125,4 +125,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/member-view'
+LOGIN_REDIRECT_URL = '/member/'
+
+
+AUTH_PROFILE_MODULE = 'relationship_app.UserProfile'

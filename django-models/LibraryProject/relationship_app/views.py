@@ -9,6 +9,7 @@ from django.contrib.auth import login
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import BookForm
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def list_books(request):
@@ -68,3 +69,9 @@ def delete_book(request, pk):
         book.delete()
         return redirect('book_list')
     return render(request, 'relationship_app/delete_book.html', {'book': book})
+
+
+@login_required
+def member_view(request):
+    # Your view logic here
+    return render(request, 'relationship_app/member_view.html')
