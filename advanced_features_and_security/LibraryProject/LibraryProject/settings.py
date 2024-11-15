@@ -130,4 +130,4 @@ LOGIN_REDIRECT_URL = '/member/'
 
 AUTH_PROFILE_MODULE = 'relationship_app.UserProfile'
 
-AUTH_USER_MODEL = 'bookshelf.User'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
