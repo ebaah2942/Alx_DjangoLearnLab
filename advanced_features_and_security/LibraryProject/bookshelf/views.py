@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from .forms import ArticleForm
 from django.shortcuts import render, redirect
 from .models import Book
+from .forms import ExampleForm
 @login_required
 def view_article(request, article_id):
     if not request.user.has_perm('app_name.can_view'):
