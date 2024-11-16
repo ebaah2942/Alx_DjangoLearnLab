@@ -6,7 +6,7 @@ from .models import Article
 from django.contrib.auth.decorators import permission_required
 from .forms import ArticleForm
 from django.shortcuts import render, redirect
-
+from .models import Book
 @login_required
 def view_article(request, article_id):
     if not request.user.has_perm('app_name.can_view'):
@@ -34,3 +34,7 @@ def delete_article(request, article_id):
         article.delete()
         return redirect('article_list')  # Redirect to article list after deletion
     return render(request, 'delete_article.html', {'article': article})
+
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'book_list.html', {'books': books})
