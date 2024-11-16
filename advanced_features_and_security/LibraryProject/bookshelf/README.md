@@ -1,0 +1,1 @@
+This application uses Django's built-in permissions system to control access to various actions (can_create, can_edit, and can_delete) for users based on their group membership. The permissions are applied to the Article model and used to control what actions users can perform.

@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-class CustomUserManager(BaseUserManager):
+class CustomUserAdmin(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
@@ -41,3 +41,21 @@ class CustomUserManager(BaseUserManager):
         user.is_staff = True
         user.save(using=self._db)
         return user
+    
+
+
+
+    from django.db import models
+
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    author = models.ForeignKey('settings.AUTH_USER_MODEL', on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can view articles"),
+            ("can_create", "Can create articles"),
+            ("can_edit", "Can edit articles"),
+            ("can_delete", "Can delete articles"),
+        ]
