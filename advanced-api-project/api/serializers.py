@@ -11,7 +11,13 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = '__all__'
-    
+
+
+    # This validates that the publication year is not in the future
+    def validate_publication_year(self, value):
+        if value > 2024:
+            raise serializers.ValidationError("Publication year cannot be in the future")
+        return value
     
     # This dynamically retreives and serializes the related books
     def get_books(self, obj):
@@ -26,4 +32,10 @@ class BookSerializer(serializers.ModelSerializer):
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Author  
-        fields = ['name']        
+        fields = ['name']    
+
+
+    def validate_name(self, value):
+        if value is None:
+            raise serializers.ValidationError("Author name cannot be empty")
+        return value        
