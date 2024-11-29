@@ -11,4 +11,4 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):    
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'books']

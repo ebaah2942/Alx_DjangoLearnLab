@@ -3,9 +3,12 @@ from .models import Author, Book
 
 # Serialized the name field from Author model
 class AuthorSerializer(serializers.ModelSerializer):
+    # Indicates that this field will handle multiple related objects 
+    # (e.g., many books for one author).
+    books = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Author
-        fields = ['name']
+        fields = ['name', 'books']
     
 
 
