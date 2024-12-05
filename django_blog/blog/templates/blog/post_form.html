@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% load static %}
+<h2>{{ view.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {{ form.title.errors }}
+    </div>
+    <div class="mb-3">
+        {{ form.content.label_tag }}
+        {{ form.content }}
+        {{ form.content.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

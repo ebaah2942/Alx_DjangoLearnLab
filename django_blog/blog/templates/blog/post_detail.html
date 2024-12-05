@@ -1,0 +1,10 @@
+{% extends "blog/base.html" %}
+{% load static %}
+<h1>{{ object.title }}</h1>
+<p>{{ object.content }}</p>
+<p>Author: {{ object.author }}</p>
+<p>Created: {{ object.created_at }}</p>
+{% if request.user == object.author %}
+    <a href="{% url 'post_update' object.pk %}">Edit</a>
+    <a href="{% url 'post_delete' object.pk %}">Delete</a>
+{% endif %}
