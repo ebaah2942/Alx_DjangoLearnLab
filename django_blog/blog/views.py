@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 from .forms import ProfileForm, PostForm, CommentForm
 from .models import Post, Comment
 from django.urls import reverse_lazy
@@ -42,6 +43,22 @@ class PostDetailView(DetailView):
             comment.save()
             return redirect('post_detail', pk=self.object.pk)
         return self.get(request, *args, **kwargs)
+    
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
+
+    def form_valid(self, form):
+        # Retrieve the related blog post
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        form.instance.blog_post = post  # Associate comment with the blog post
+        form.instance.author = self.request.user  # Set the comment author
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.blog_post.get_absolute_url()    
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
