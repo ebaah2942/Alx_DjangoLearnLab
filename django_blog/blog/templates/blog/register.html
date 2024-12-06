@@ -1,9 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <h2>Register</h2>
+<div class="container-fluid" style="padding-top: 100px; ;">
+    <h2 style="text-align: center; font-style: italic;"><strong>REGISTER</strong></h2>
     <form class="taken" method="="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <button class="btn btn-primary" type="submit">Register</button>
     </form>
+
+</div>
+    
 {% endblock %}

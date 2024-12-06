@@ -1,10 +1,44 @@
 {% extends "blog/base.html" %}
 {% load static %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
-<p>Author: {{ object.author }}</p>
-<p>Created: {{ object.created_at }}</p>
-{% if request.user == object.author %}
-    <a href="{% url 'post_update' object.pk %}">Edit</a>
-    <a href="{% url 'post_delete' object.pk %}">Delete</a>
-{% endif %}
+{% block content %}
+<div class="container" style="padding-top: 100px; margin-bottom: 50px;"">
+    <div class="container col-lg" style="background-color: aliceblue; text-align: center;">
+        <h1>{{ object.title }}</h1>
+        <p>{{ object.content }}</p>
+        <p>Author: {{ object.author }}</p>
+        <p>Created: {{ object.created_at }}</p>
+        
+        </div>
+        <div style="text-align: center;">
+            {% if request.user == object.author %}
+            <a class="btn btn-primary" href="{% url 'post_edit' object.pk %}">Edit</a>
+            <a  class="btn btn-danger" href="{% url 'post_delete' object.pk %}">Delete</a>
+        {% endif %}
+        
+        </div>
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <p>{{ comment.content }} - {{ comment.author }}</p>
+                {% if comment.author == user %}
+                    <a href="{% url 'comment_edit' comment.pk %}">Edit</a>
+                    <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Add a Comment</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Comment</button>
+    </form>
+   
+
+</div>
+   
+
+
+{% endblock %}

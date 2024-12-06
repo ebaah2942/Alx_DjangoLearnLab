@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post
+from .models import Post, Comment
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -31,4 +31,28 @@ class PostForm(forms.ModelForm):
         labels = {
             'title': 'Title',
             'content': 'Content',
-        }           
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content',]
+
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+        labels = {
+            'content': 'Content',
+        }
+
+        def validate(self):
+            super(CommentForm, self).validate()
+            content = self.cleaned_data.get('content')
+            if not content:
+                self.add_error('content', 'Content is required')
+                        
+
+
+

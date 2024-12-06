@@ -1,18 +1,20 @@
 {% extends "blog/base.html" %}
 {% load static %}
+{% block content %}
 <h2>{{ view.title }}</h2>
-<form method="post">
+<form method="post" style="padding-top: 100px;">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    <div class="mb-3">
+    <div>
         {{ form.title.label_tag }}
         {{ form.title }}
         {{ form.title.errors }}
     </div>
-    <div class="mb-3">
+    <div>
         {{ form.content.label_tag }}
         {{ form.content }}
         {{ form.content.errors }}
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button class="btn btn-primary" type="submit">Save</button>
 </form>
+{% endblock %}
