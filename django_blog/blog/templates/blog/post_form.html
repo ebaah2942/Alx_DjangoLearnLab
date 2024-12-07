@@ -15,6 +15,11 @@
         {{ form.content }}
         {{ form.content.errors }}
     </div>
+    <p><strong>Tags:</strong> 
+        {% for tag in post.tags.all %}
+            <span>{{ tag }}</span>
+        {% endfor %}
+    </p>
     <button class="btn btn-primary" type="submit">Save</button>
 </form>
 {% endblock %}
