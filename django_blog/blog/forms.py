@@ -2,8 +2,13 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Comment, Tag
-from .widgets import Tagwidget
 
+
+
+class TagWidget(forms.CheckboxSelectMultiple):
+    def __init__(self, attrs=None):
+        super().__init__(attrs)
+        self.attrs.update({'class': 'form-control', 'style': 'width: 300px;'})
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Enter a valid email address.')
@@ -29,7 +34,7 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
-            'tags': ["Tagwidget()"],
+            'tags': ["TagWidget()"],
 
         }
        
