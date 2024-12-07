@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Comment, Tag
+from .widgets import Tagwidget
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -28,10 +29,10 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
-            # 'tags': forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'style': 'width: 300px;'}),
+            'tags': Tagwidget(),
 
         }
-        Tagwidget = forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'style': 'width: 300px;'})
+       
 
         labels = {
             'title': 'Title',
@@ -49,6 +50,7 @@ class PostForm(forms.ModelForm):
                     tag, created = Tag.objects.get_or_create(name=name)
                     instance.tags.add(tag)
         return instance
+
 
 
 class CommentForm(forms.ModelForm):
