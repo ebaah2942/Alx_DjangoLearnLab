@@ -28,9 +28,10 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
-            'tags': forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'style': 'width: 300px;'}),
+            # 'tags': forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'style': 'width: 300px;'}),
 
         }
+        Tagwidget = forms.CheckboxSelectMultiple(attrs={'class': 'form-control', 'style': 'width: 300px;'})
 
         labels = {
             'title': 'Title',
