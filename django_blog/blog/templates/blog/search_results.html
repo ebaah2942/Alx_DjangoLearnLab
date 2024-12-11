@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-<h1>Search Results for "{{ query }}"</h1>
+<h1 style="padding-top: 100px;">Search Results for "{{ query }}"</h1>
 {% if results %}
     <ul>
         {% for post in results %}

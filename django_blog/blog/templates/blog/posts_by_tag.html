@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Posts tagged with {{ tag.name }}</h1>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+            <a href="{% url 'post_by_tag' tag.pk %}">{{  post.tag }}</a>
+        </li>
+    {% empty %}
+        No posts
+    {% endfor %}
+</ul>
+
+{% endblock %}

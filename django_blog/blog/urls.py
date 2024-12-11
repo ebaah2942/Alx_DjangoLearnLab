@@ -1,4 +1,6 @@
 from django.contrib.auth.views import LoginView, LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
@@ -20,8 +22,11 @@ urlpatterns = [
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='add_comment_to_post'),
     path('search/', views.search, name='search'),
-    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='tag_posts'),
+    # path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='tag_posts'),
+    path('tags/<slug:tag_slug>/', views.posts_by_tag, name='posts_by_tag'),
 
 
 
-]
+] 
+
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

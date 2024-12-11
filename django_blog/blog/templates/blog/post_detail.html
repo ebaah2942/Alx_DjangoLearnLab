@@ -20,15 +20,8 @@
             {% for item in object.content.splitlines %}
                 <ul style="list-style-position: inside; text-align: left;">{{ item }}</ul>
             {% endfor %}
+            <img src="{{ post.image.url }}" alt="{{ post.image.name }}">
         </ol>
-        <!-- <p>{{ object.content }}</p> -->
-        
-    <p><strong>Tags:</strong>
-        {% for tag in post.tags.all %}
-            <a href="{% url 'posts_by_tag' tag.name %}" class="tag">{{ tag.name }}</a>
-        {% endfor %}
-    </p>
-        
         
         </div>
         <div style="text-align: center;">
@@ -38,6 +31,16 @@
         {% endif %}
         
         </div>
+        <p>Tags:
+
+            {% for tag in post.tags.all %}
+                {% if tag.slug %}
+                    <a href="{% url 'posts_by_tag' tag.slug|default:'' %}">{{ tag.name }}</a>
+                {% else%}
+                    {{ tag.name }}
+                {% endif %}
+            {% endfor %}
+        </p>   
     <h2>Comments</h2>
     <ul>
         {% for comment in comments %}
