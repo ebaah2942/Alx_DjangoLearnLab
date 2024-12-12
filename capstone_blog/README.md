@@ -12,3 +12,5 @@ POST /login/
 POST /logout/
 
 I used postman to test its functionality. Any user who login get a token for authentication. 
+
+This is the whole process.
