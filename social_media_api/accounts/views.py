@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CustomUserSerializer, RegisterSerializer, ProfileSerializer
@@ -11,6 +12,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+
 
 
 # Create your views here.
@@ -37,7 +39,7 @@ def unfollow_user(request, user_id):
 
 
 
-class RegisterView(APIView):
+class RegisterView(generics.GenericAPIView):
     permission_classes =[AllowAny]
 
     def post(self, request):
@@ -54,7 +56,7 @@ class RegisterView(APIView):
 
 
 
-class LoginView(APIView):
+class LoginView(generics.GenericAPIView):
     permission_classes = [AllowAny]
 
     def post(self, request):  
@@ -70,7 +72,7 @@ class LoginView(APIView):
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-class ProfileView(APIView):
+class ProfileView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
