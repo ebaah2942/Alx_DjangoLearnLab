@@ -86,3 +86,10 @@ class ProfileView(generics.GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    class UserListView(generics.GenericAPIView):
+        permission_classes = [IsAuthenticated]
+        def get(self, request):
+            users = CustomUser.objects.all()
+            serializer = CustomUserSerializer(users, many=True)
+            return Response(serializer.data)
