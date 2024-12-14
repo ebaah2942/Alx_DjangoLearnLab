@@ -4,8 +4,20 @@ from .serializers import CommentSerializer, PostSerializer
 from .models import Post, Comment
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_feed(request):
+     # Fetch posts from followed users
+    followed_users = request.user.following.all()
+    posts = Post.objects.filter(user__in=followed_users).order_by('-created_at')
+    serializer = PostSerializer(posts, many=True)
+    return Response(serializer.data)
+   
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     # custom permission to allow only author to edit and delete a post or comment
@@ -19,7 +31,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return is_owner
     
 class PostPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 10
     
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
