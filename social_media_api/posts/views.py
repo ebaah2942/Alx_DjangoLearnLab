@@ -36,7 +36,7 @@ class PostPagination(PageNumberPagination):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['title', 'content']
     pagination_class = PostPagination
@@ -51,7 +51,7 @@ class CommentPagination(PageNumberPagination):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticated]
     pagination_class = CommentPagination
 
 
