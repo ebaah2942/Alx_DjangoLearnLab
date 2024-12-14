@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions
 
 
 
@@ -88,7 +89,7 @@ class ProfileView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     class UserListView(generics.GenericAPIView):
-        permission_classes = [IsAuthenticated]
+        permission_classes = [permissions.IsAuthenticated]
         def get(self, request):
             users = CustomUser.objects.all()
             serializer = CustomUserSerializer(users, many=True)
