@@ -11,11 +11,12 @@ from notifications.models import Notification
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from rest_framework import generics
 
 # Create your views here.
 @login_required
 def like_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = generics.get_object_or_404(Post, pk=pk)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if created:
         Notification.objects.create(
@@ -28,7 +29,7 @@ def like_post(request, pk):
     return JsonResponse({'success': True, 'likes_count': post.likes.count()})
 @login_required
 def unlike_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = generics.get_object_or_404(Post, pk=pk)
     like = Like.objects.filter(user=request.user, post=post).first()
     if like:
         like.delete()
