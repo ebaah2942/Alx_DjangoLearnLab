@@ -259,4 +259,211 @@ New Endpoints:
 
 /feed/: View the content feed from followed users.
 
+The Likes and Notifications systems are designed to increase user engagement by allowing users to interact with posts and stay informed about important activities.
+
+
+
+
+
+LIKE SYSTEM
+
+The likes system enables users to like or unlike posts, providing a simple and interactive way to engage with content.
+
+Endpoints
+
+Like a Post
+
+URL: /posts/<int:pk>/like/
+
+Method: POST
+
+Authentication: Required
+
+Request Body: None
+
+Response:
+
+{
+  "success": true,
+  "likes_count": 10
+}
+
+Description: Likes the specified post. Increments the like count.
+
+Unlike a Post
+
+URL: /posts/<int:pk>/unlike/
+
+Method: POST
+
+Authentication: Required
+
+Request Body: None
+
+Response:
+
+{
+  "success": true,
+  "likes_count": 9
+}
+
+Description: Removes the user’s like from the specified post. Decrements the like count.
+
+Fetch Likes for a Post
+
+URL: /posts/<int:pk>/likes/
+
+Method: GET
+
+Authentication: Optional
+
+Response:
+
+{
+  "likes_count": 10,
+  "liked_by": [
+    {"id": 1, "username": "user1"},
+    {"id": 2, "username": "user2"}
+  ]
+}
+
+Description: Fetches the total likes and the list of users who liked the post.
+
+Benefits
+
+Encourages interaction with content.
+
+Allows users to express appreciation for posts.
+
+Notifications System
+
+The notifications system alerts users about significant events, such as new likes, comments, and followers.
+
+Endpoints
+
+Fetch Notifications
+
+URL: /notifications/
+
+Method: GET
+
+Authentication: Required
+
+Response:
+
+[
+  {
+    "id": 1,
+    "actor": {"id": 2, "username": "user2"},
+    "verb": "liked your post",
+    "target": {"id": 5, "type": "post", "title": "Sample Post"},
+    "timestamp": "2024-12-15T10:30:00Z",
+    "read": false
+  },
+  {
+    "id": 2,
+    "actor": {"id": 3, "username": "user3"},
+    "verb": "commented on your post",
+    "target": {"id": 5, "type": "post", "title": "Sample Post"},
+    "timestamp": "2024-12-15T11:00:00Z",
+    "read": true
+  }
+]
+
+Description: Fetches all notifications for the authenticated user, with unread notifications shown prominently.
+
+Mark Notification as Read
+
+URL: /notifications/<int:pk>/read/
+
+Method: POST
+
+Authentication: Required
+
+Response:
+
+{
+  "success": true,
+  "message": "Notification marked as read."
+}
+
+Description: Marks the specified notification as read.
+
+Mark All Notifications as Read
+
+URL: /notifications/read-all/
+
+Method: POST
+
+Authentication: Required
+
+Response:
+
+{
+  "success": true,
+  "message": "All notifications marked as read."
+}
+
+Description: Marks all notifications for the user as read.
+
+Benefits
+
+Keeps users informed about interactions with their posts.
+
+Encourages users to engage more by highlighting activity.
+
+Improves the social experience by fostering timely responses to activities.
+
+Interaction Workflow Examples
+
+1. Liking a Post
+
+Request:
+
+POST /posts/1/like/
+Authorization: Token <your_token>
+
+Response:
+
+{
+  "success": true,
+  "likes_count": 20
+}
+
+2. Fetching Notifications
+
+Request:
+
+GET /notifications/
+Authorization: Token <your_token>
+
+Response:
+
+[
+  {
+    "id": 1,
+    "actor": {"id": 2, "username": "user2"},
+    "verb": "liked your post",
+    "target": {"id": 5, "type": "post", "title": "Sample Post"},
+    "timestamp": "2024-12-15T10:30:00Z",
+    "read": false
+  }
+]
+
+3. Marking a Notification as Read
+
+Request:
+
+POST /notifications/1/read/
+Authorization: Token <your_token>
+
+Response:
+
+{
+  "success": true,
+  "message": "Notification marked as read."
+}
+
+
+
 

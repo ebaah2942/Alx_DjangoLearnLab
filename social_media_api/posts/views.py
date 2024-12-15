@@ -1,14 +1,40 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .serializers import CommentSerializer, PostSerializer
-from .models import Post, Comment
+from .models import Post, Comment, Like
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from notifications.models import Notification
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 # Create your views here.
+@login_required
+def like_post(request, post_id):
+    post = get_object_or_404(Post, pk=pk)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    if created:
+        Notification.objects.create(
+            recipient = post.author,
+            actor = request.user,
+            verb = 'Liked your post',
+            target = post
+        )
+
+    return JsonResponse({'success': True, 'likes_count': post.likes.count()})
+@login_required
+def unlike_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    like = Like.objects.filter(user=request.user, post=post).first()
+    if like:
+        like.delete()
+    return JsonResponse({'success': True, 'likes_count': post.likes.count()})
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_feed(request):
@@ -56,8 +82,17 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
     def perform_create(self, serializer):
-        # This authomatically sets the author to the current user
-        serializer.save(author=self.request.user)
+       
+        comment = serializer.save(user=self.request.user)
 
+        # Create a notification for the post's author
+        post = comment.post
+        if post.author != self.request.user:  # Avoid notifying the author if they comment on their own post
+            Notification.objects.create(
+                recipient=post.author,
+                actor=self.request.user,
+                verb='commented on your post',
+                target=post
+            )
 
 
