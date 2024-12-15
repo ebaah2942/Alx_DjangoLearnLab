@@ -14,7 +14,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 @login_required
-def like_post(request, post_id):
+def like_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if created:
@@ -40,9 +40,18 @@ def unlike_post(request, pk):
 def user_feed(request):
      # Fetch posts from followed users
     following_users = request.user.following.all()
+    if not following_users.exists():
+        return Response({"message": "You are not following anyone yet."}, status=200)
+
     posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
-    serializer = PostSerializer(posts, many=True)
-    return Response(serializer.data)
+
+    # Paginate posts
+    paginator = PostPagination()
+    paginated_posts = paginator.paginate_queryset(posts, request)
+
+    # Serialize and return paginated data
+    serializer = PostSerializer(paginated_posts, many=True)
+    return paginator.get_paginated_response(serializer.data)
    
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
