@@ -1,0 +1,7 @@
+.env
+
+pro/
+
+*.pyc
+
+__pycache__/
