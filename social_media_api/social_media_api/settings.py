@@ -171,20 +171,7 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
-# AWS_ACCESS_KEY_ID = 'YOUR_AWS_ACCESS_KEY_ID'
-# AWS_SECRET_ACCESS_KEY = 'YOUR_AWS_SECRET_ACCESS_KEY'
-# AWS_STORAGE_BUCKET_NAME = 'YOUR_AWS_STORAGE_BUCKET_NAME'
 
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
-
-
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-
-# MEDIA_ROOT = '/path/to/media/root'
-# MEDIA_URL = "https://%s/media/" % AWS_S3_CUSTOM_DOMAIN
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
