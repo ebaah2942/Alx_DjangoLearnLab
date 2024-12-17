@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'posts.apps.PostsConfig',
     'notifications.apps.NotificationsConfig',
+    'django_extensions',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
