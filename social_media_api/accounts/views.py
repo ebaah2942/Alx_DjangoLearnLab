@@ -42,6 +42,7 @@ def unfollow_user(request, user_id):
 
 class RegisterView(generics.GenericAPIView):
     permission_classes =[AllowAny]
+    serializer_class = RegisterSerializer
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -59,6 +60,8 @@ class RegisterView(generics.GenericAPIView):
 
 class LoginView(generics.GenericAPIView):
     permission_classes = [AllowAny]
+    serializer_class = CustomUserSerializer
+
 
     def post(self, request):  
         username = request.data.get('username')
@@ -75,6 +78,7 @@ class LoginView(generics.GenericAPIView):
 
 class ProfileView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = ProfileSerializer
     def get(self, request):
         user = request.user
         serializer = ProfileSerializer(user)
