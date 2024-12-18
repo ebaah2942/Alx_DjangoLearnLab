@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from rest_framework import generics
 
 # Create your views here.
+
 @login_required
 def like_post(request, pk):
     post = generics.get_object_or_404(Post, pk=pk)
